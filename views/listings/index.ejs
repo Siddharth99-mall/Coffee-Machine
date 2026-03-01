@@ -1,0 +1,280 @@
+<% layout("/layouts/boilerplate")-%>
+<style>
+#filters{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+ 
+}
+
+
+
+.filter,.category-icon{
+  text-align: center;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  opacity: 0.8;
+  }
+  
+
+      .search-wrapper input {
+        width: 100%;
+        padding: 12px 18px 12px 42px; /* space for icon */
+        font-size: 18px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        outline: none;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+
+    .search-wrapper input:focus {
+      border-color: #fe242d;
+      box-shadow: 0 0 12px rgba(227, 7, 11, 0.3);
+    }
+
+
+  .filter:hover{
+    opacity: 1;
+    cursor: pointer;
+  }
+  .filter p{
+    font-size: 0.8rem;
+  }
+  .after-tax{
+    display: none;
+  }
+  .toggle{
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    border: solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-left: 3rem;
+    width: 17rem;
+  }
+  .both{
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  #switchCheckReverse{
+  position: fixed;
+  right: 10.5rem;
+  }
+
+.search-box {
+  position: relative;
+  width: 300px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 10px 10px 4rem; /* Left padding for icon */
+  border: 1px solid #ccc;
+  border-radius: 1.5rem;
+}
+
+.search-box i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  padding-left: 1.4rem;
+  transform: translateY(-50%);
+  color: #000000;
+}
+</style>
+<body>
+<!-- ----------------------------- -->
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listing"><i class="fa-brands fa-java"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav">
+          <a class="nav-link" href="/listing">Coffee Machine</a>
+      </div>
+
+
+     
+
+        <div class="search-wrapper d-flex ms-auto search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="countrySearch" class="search-bar" placeholder="Seach...." onkeyup="searchCountry()" autocomplete="off" />
+        </div>
+      
+        
+  
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listing/new">Add New Machine</a>
+        <div class="dropdown">
+        
+          <% if(!currentUser) { %>
+            
+            <div class="btn-group dropdown-btn">
+              <button type="button" class="btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                <i class="fa-solid fa-user fa-shake  "></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/signup"><b>Sign Up</b></a></li>
+              <li><a class="dropdown-item"  href="/login"><b>Log In</b></a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item"  href="/login"><b>Help Center</b></a></li>
+              </ul>
+            </div>
+            
+            <%}%>
+            <% if(currentUser) { %>
+              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-user"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/logout"><b>Log Out</b></a></li>
+                </ul>
+              <%}%>
+        </div>
+      </div>
+  </div>
+</div>
+</nav>
+   <!-- --------------------- -->
+    <div id="filters" >
+      
+      <div class="filter category-icon" data-filter="Manual">
+       <i class="fa-solid fa-fire fa-bounce"></i>
+        <p>Manual</p>
+      </div>
+   
+      <div class="filter category-icon"  data-filter="Semi-Automatic">
+        <i class="fa-brands fa-autoprefixer"></i>
+        <p>Semi-Automatic</p>
+      </div>
+      
+      <div class="filter category-icon"  data-filter="Automatic">
+        <i class="fa-solid fa-city"></i>
+        <p>Automatic</p>
+      </div>
+      <!-- <div class="filter category-icon"  data-filter="Amazing pools">
+        <i class="fa-solid fa-person-swimming"></i>
+        <p>Amazing pools</p>
+      </div>
+      <div class="category-icon filter" data-filter="Beach">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <p>Beach</p>
+      </div>
+      <div class="filter category-icon" data-filter="Arctic">
+        <i class="fa-solid fa-snowflake"></i>
+        <p>Arctic</p>
+     
+      </div>
+     
+      <div class="filter category-icon"  data-filter="Castle">
+        <i class="fa-solid fa-chess-rook"></i>
+        <p>Castle</p>
+      </div>
+      <div class="filter category-icon"  data-filter="Mountain">
+        <i class="fa-solid fa-mountain-sun"></i>
+        <p>Mountain</p>
+      </div>
+      <div class="filter category-icon"  data-filter="Camping">
+        <i class="fa-solid fa-campground"></i>
+        <p>Camping</p>
+      </div>
+      <div class="filter category-icon"  data-filter="Farm">
+        <i class="fa-solid fa-cow"></i>
+        <p>Farm</p>
+      </div>
+      <div class="filter category-icon"  data-filter="Boats">
+        <i class="fa-solid fa-sailboat"></i>
+        <p>Boats</p>
+      </div>
+      <div class="filter category-icon"  data-filter="Domes">
+        <i class="fa-solid fa-igloo"></i>
+        <p>Domes</p>
+      </div> -->
+     
+      
+      <div class="toggle">   
+          <div class="form-check form-switch form-check-reverse both">
+           <label class="form-check-label" id="toggle-text"  for="switchCheckReverse">Display total after taxes</label>
+           <input class="form-check-input" type="checkbox" id="switchCheckReverse">
+          </div>
+      </div>
+    </div>
+
+
+
+    
+    
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 listings-container countryCardsContainer ">
+</div>
+  
+ <script>
+let toggle = document.getElementById("switchCheckReverse");
+toggle.addEventListener("click", () => {
+  let tax = document.getElementsByClassName("after-tax");
+  let toggleText = document.getElementById("toggle-text");
+  for (info of tax) {
+    if (info.style.display != "inline") {
+      info.style.display = "inline";
+      toggleText.innerText = "Display total before taxes";
+    } else {
+      info.style.display = "none";
+      toggleText.innerText = "Display total after taxes";
+    }
+  }
+});
+
+const icons = document.querySelectorAll(".category-icon");
+const listingsContainer = document.querySelector(".listings-container");
+let allListingsData = [...<%- JSON.stringify(allListings || []) %>]; // Ensure allListings is defined
+
+icons.forEach(icon => {
+  icon.addEventListener("click", () => {
+    const selectedCategory = icon.getAttribute("data-filter");
+    const filteredListings = allListingsData.filter(listing => listing.category === selectedCategory);
+    renderListings(filteredListings);
+  });
+});
+
+function searchCountry() {
+  const input = document.getElementById("countrySearch");
+  const filter = input.value.toLowerCase();
+  const filteredListings = allListingsData.filter(listing => 
+    listing.country?.toLowerCase().includes(filter) || 
+    listing.location?.toLowerCase().includes(filter)
+  );
+  renderListings(filteredListings);
+}
+
+function renderListings(listings) {
+  listingsContainer.innerHTML = ""; // Clear existing listings
+  listings.forEach(list => {
+    const listingHTML = `
+      <a href="/listing/${list._id}" class="listing-link">
+        <div class="card col listing country-card" data-country="${list.country || ''}" data-location="${list.location || ''}" data-category="${list.category || ''}">
+          <div class="card-img-overlay">
+            <p class="card-text"></p>
+          </div>
+          <img src="${list.image || '/default-image.jpg'}" class="card-img-top" alt="listing-image">
+          <div class="card-body">
+            <p class="card-text"><b>${list.title || 'Untitled'}</b><br>
+              &#8377 ${list.price?.toLocaleString("en-IN") || 'N/A'} &nbsp; &nbsp;<i class="after-tax">+18% gst</i>
+            </p>
+          </div>
+        </div>
+      </a>
+    `;
+    listingsContainer.insertAdjacentHTML("beforeend", listingHTML);
+  });
+}
+
+// Initial render to ensure all listings are displayed
+renderListings(allListingsData);
+</script>
+</body>

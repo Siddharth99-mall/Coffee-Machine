@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/listing"><i class="fa-regular fa-compass "></i></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+            <a class="nav-link" href="/listing">Explore</a>
+        </div>
+
+
+
+
+        <form action="/listing/search" method="GET" class="d-flex ms-auto search-bar" role="search">
+          <input name="query" class="form-control me-2" id="country-search" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn  search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
+
+
+
+
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/listing/new">Airbnb your home</a>
+          <div class="dropdown">
+          
+            <% if(!currentUser) { %>
+              
+              <div class="btn-group dropdown-btn">
+                <button type="button" class="btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                  <i class="fa-solid fa-user fa-shake  "></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="/signup"><b>Sign Up</b></a></li>
+                <li><a class="dropdown-item"  href="/login"><b>Log In</b></a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item"  href="/login"><b>Help Center</b></a></li>
+                </ul>
+              </div>
+              
+              <%}%>
+              <% if(currentUser) { %>
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa-solid fa-user"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="/logout"><b>Log Out</b></a></li>
+                  </ul>
+                <%}%>
+          </div>
+        </div>
+    </div>
+  </div>
+</nav>

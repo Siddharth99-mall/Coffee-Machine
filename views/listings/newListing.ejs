@@ -1,0 +1,67 @@
+<% layout("/layouts/boilerplate") -%>
+<body>
+<div >
+    
+    <div class="row">
+        <div class="col-7 offset-2">
+            <h3 class="mt-2"><b>New Machine Details</b></h3>
+    <form method="POST" action="/listing" novalidate class="needs-validation">
+        <div class="mb-2">
+         <label for="title" class="form-label">Machine Name</label>
+         <input type="text" id="title" name="listing[title]" class="form-control" placeholder="enter title" required>
+         
+         <div class="valid-feedback">Title looks good!</div>
+         <div class="invalid-feedback">Please provide a name</div>
+</div>
+         <div class="mb-3">
+         <label for="desc" class="form-label">Description</label>
+         <textarea name="listing[description]" class="form-control"  id="desc" required></textarea>
+         <div class="invalid-feedback">Please provide a description</div>
+        </div>
+        <div class="mb-3">
+            <label for="img" class="form-label">Image Link</label>
+            <input type="text" name="listing[image]" id="img" class="form-control" placeholder="enter image URL/Link">
+        </div>
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" id="price" name="listing[price]" class="form-control" placeholder="enter price" required>
+                <div class="invalid-feedback">Please provide a price</div>
+            </div>
+               <div class="mb-3 col-md-8">
+                <label for="coun" class="form-label">Supplier</label>
+                <input type="text" id="coun" class="form-control" placeholder="enter supplier name" name="listing[country]" required>
+                <div class="invalid-feedback">Please provide a supplier name</div>  
+            </div>
+        </div>
+         <div class="row">
+            <!-- <div class="mb-3 col-md-4">
+                  <label for="category" class="form-label">Machine Type</label>
+                  <select id="dropdown category" name="listing[category]" placeholder="enter category" class="form-control" required onchange="showSelected()">
+                    <option value="Manual" selected>Select a Category</option> 
+                    <option value="Automatic">Automatic</option>
+                    <option value="Manual">Manual</option>
+                    <option value="Semi-Automatic">Semi-Automatic</option> -->
+                    <!-- <option value="Amazing Pools">Amazing pools</option>
+                    <option value="Beach">Beach</option>
+                    <option value="Arctic">Arctic</option>
+                    <option value="Castle">Castle</option>
+                    <option value="Camping">Camping</option>
+                    <option value="Farms">Farms</option>
+                    <option value="Boats">Boats</option>
+                    <option value="Domes">Domes</option> -->
+                  <!-- </select>
+               
+           </div>   -->
+           <div class="mb-3 col-md-8">
+               <label for="loc" class="form-label">Status</label>
+              <input type="text" id="loc" name="listing[location]" placeholder="enter status" class="form-control" required> 
+              <div class="invalid-feedback">Current Status</div>   
+          </div>    
+         </div> 
+         <button class="btn mb-3 add-btn">Add</button>
+    </form>
+    </div>
+    </div>
+    </div>
+</body>
