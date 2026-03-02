@@ -18,7 +18,7 @@ router.post("/signup",wrapAsync(async(req,res)=>{
       if(err){
          next(err);
       }else{
-         req.flash("success","Welcome to WanderLust");
+         req.flash("success","Welcome to Coffee Machine");
          res.redirect("/listing");
       }
     })
@@ -33,7 +33,7 @@ router.get("/login",(req,res)=>{
 });
 router.post("/login",saveRedirectUrl,passport.authenticate("local",{failureRedirect:"/login",failureFlash : true}),
    async(req,res)=>{
-      req.flash("success","Welcome Back to WanderLust")
+      req.flash("success","Welcome Back to Coffee Machine")
       let redirectUrl=res.locals.redirectUrl||"/listing";
       res.redirect(redirectUrl);
    }  
