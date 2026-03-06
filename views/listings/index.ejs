@@ -258,7 +258,7 @@ function renderListings(listings) {
   listings.forEach(list => {
     const listingHTML = `
       <a href="/listing/${list._id}" class="listing-link">
-        <div class="card col listing country-card" data-country="${list.country || ''}" data-location="${list.location || ''}" data-category="${list.category || ''}">
+        <div class="card col listing country-card" data-listing-id="${list._id}" data-listing-title="${list.title}" data-country="${list.country || ''}" data-location="${list.location || ''}" data-category="${list.category || ''}">
           <div class="card-img-overlay">
             <p class="card-text"></p>
           </div>

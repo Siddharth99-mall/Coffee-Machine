@@ -1,0 +1,139 @@
+<% layout("/layouts/boilerplate") -%>
+
+<div class="comparison-container">
+  <% if (error) { %>
+    <div style="
+      background: #fee;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      color: #c33;
+      border-left: 4px solid #c33;
+    ">
+      <strong>⚠️ Error:</strong> <%= error %>
+    </div>
+    <a href="/listing" class="back-btn">← Back to Listings</a>
+  <% } else { %>
+    <div class="comparison-title">
+      ⚖️ Machine Comparison
+    </div>
+
+    <div class="comparison-machines">
+      <!-- Machine 1 -->
+      <div class="machine-card">
+        <img src="<%= machine1.image %>" alt="<%= machine1.title %>" class="machine-image" />
+        <div class="machine-info">
+          <h2 class="machine-name"><%= machine1.title %></h2>
+
+          <ul class="machine-specs">
+            <li>
+              <span class="spec-label">Category</span>
+              <span class="spec-value"><%= machine1.category %></span>
+            </li>
+            <li>
+              <span class="spec-label">Price</span>
+              <span class="spec-value">₹<%= machine1.price.toLocaleString() %></span>
+            </li>
+            <li>
+              <span class="spec-label">Location</span>
+              <span class="spec-value"><%= machine1.location %></span>
+            </li>
+            <li>
+              <span class="spec-label">Country</span>
+              <span class="spec-value"><%= machine1.country %></span>
+            </li>
+            <li>
+              <span class="spec-label">Reviews</span>
+              <span class="spec-value"><%= machine1.reviews.length %> reviews</span>
+            </li>
+          </ul>
+
+          <a href="/listing/<%= machine1._id %>" class="back-btn" style="display: block; margin-top: 15px; text-align: center;">
+            View Details →
+          </a>
+        </div>
+      </div>
+
+      <!-- Machine 2 -->
+      <div class="machine-card">
+        <img src="<%= machine2.image %>" alt="<%= machine2.title %>" class="machine-image" />
+        <div class="machine-info">
+          <h2 class="machine-name"><%= machine2.title %></h2>
+
+          <ul class="machine-specs">
+            <li>
+              <span class="spec-label">Category</span>
+              <span class="spec-value"><%= machine2.category %></span>
+            </li>
+            <li>
+              <span class="spec-label">Price</span>
+              <span class="spec-value">₹<%= machine2.price.toLocaleString() %></span>
+            </li>
+            <li>
+              <span class="spec-label">Location</span>
+              <span class="spec-value"><%= machine2.location %></span>
+            </li>
+            <li>
+              <span class="spec-label">Country</span>
+              <span class="spec-value"><%= machine2.country %></span>
+            </li>
+            <li>
+              <span class="spec-label">Reviews</span>
+              <span class="spec-value"><%= machine2.reviews.length %> reviews</span>
+            </li>
+          </ul>
+
+          <a href="/listing/<%= machine2._id %>" class="back-btn" style="display: block; margin-top: 15px; text-align: center;">
+            View Details →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Analysis -->
+    <div class="comparison-analysis">
+      <h3 class="analysis-title">📊 Detailed Comparison</h3>
+      <ul class="analysis-points">
+        <% comparison.priceComparison.forEach(point => { %>
+          <li><%= point %></li>
+        <% }); %>
+        <% comparison.features.forEach(feature => { %>
+          <li><%= feature %></li>
+        <% }); %>
+      </ul>
+    </div>
+
+    <!-- Verdict -->
+    <div class="comparison-verdict">
+      <div class="verdict-title">🏆 Our Verdict</div>
+      <p class="verdict-text"><%= comparison.verdict %></p>
+      <p style="font-size: 14px; margin-bottom: 0;">We recommend trying both machines to determine which best fits your needs and preferences.</p>
+    </div>
+
+    <!-- Navigation -->
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="/listing" class="back-btn">← Back to Listings</a>
+    </div>
+  <% } %>
+</div>
+
+<style>
+  .back-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .back-btn:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+</style>

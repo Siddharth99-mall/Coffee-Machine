@@ -9,11 +9,15 @@ const ExpressError=require("./utils/ExpressError.js");
 const listingRouter=require("./routes/listing.js");
 const reviewRouter=require("./routes/review.js");
 const userRouter=require("./routes/user.js");
+const comparisonRouter=require("./routes/comparison.js");
 const session=require("express-session");
 const flash = require("connect-flash");
 const passport =require("passport");
 const LocalStrategy=require("passport-local");
 const User=require("./models/user.js");
+require("dotenv").config();
+
+
  
 
 app.set("view engine","ejs");
@@ -69,6 +73,8 @@ app.use((req,res,next)=>{
          next()
 })
 
+// register comparison router before listing router so "/listing/compare" is not treated as an ID
+app.use("/listing",comparisonRouter);
 app.use("/listing",listingRouter);
 app.use("/listing/:id/reviews",reviewRouter);
 app.use("/",userRouter);

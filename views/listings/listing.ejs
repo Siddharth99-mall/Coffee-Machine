@@ -154,9 +154,27 @@
                                                         <p class="card-text"><%= review.comment %></p>
                                                 </div>
                                                 <div class="mb-3">
+                                                        
+
+                                                          <% if(
+    currentUser &&
+    (
+        currentUser._id.equals(list.owner[0]._id) ||
+        currentUser.email === "admin@gmail.com" ||
+        currentUser.email === "reviewer@gmail.com"
+    )
+){ %>
+
+
+
+
                                                 <form method="POST" action="/listing/<%= list.id %>/reviews/<%=review._id%>?_method=DELETE">
                                                         <button class="btn btn-dark">Delete</button>
                                                 </form>
+
+
+                                                        <% } %>
+
                                                 </div>
                                         </div>
                                                 <% } %>

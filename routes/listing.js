@@ -6,6 +6,7 @@ const ExpressError=require("../utils/ExpressError.js");
 const {listingSchema}=require("../schema.js");
 const {isLoggedIn}=require("../middleware.js");
 const mongoose = require("mongoose");
+const sendAdminEmail = require("../utils/sendEmail.js");
 
 const validateListing = (req,res,next)=>{
     let {error}=listingSchema.validate(req.body);
@@ -17,7 +18,21 @@ const validateListing = (req,res,next)=>{
     }
 }
 router.get("/" , wrapAsync (async (req,res)=>{
-    let allListings = await Listing.find({}); 
+    const { sort, order, category } = req.query;
+    let query = {};
+    if (category) {
+      query.category = category;
+    }
+
+    let listingsQuery = Listing.find(query);
+
+    // apply sorting by price if requested
+    if (sort === 'price') {
+      const sortOrder = order === 'desc' ? -1 : 1;
+      listingsQuery = listingsQuery.sort({ price: sortOrder });
+    }
+
+    const allListings = await listingsQuery.exec();
    
     res.render("listings/index.ejs", {allListings});
 }));
@@ -63,13 +78,27 @@ router.get("/:id", wrapAsync(async (req, res) => {
 }));
 
 
-router.post("/",isLoggedIn,validateListing , wrapAsync (async(req,res,next)=>{
-    let newlisting=new Listing(req.body.listing);
-    newlisting.owner=req.user._id;
+// router.post("/",isLoggedIn,validateListing , wrapAsync (async(req,res,next)=>{
+//     let newlisting=new Listing(req.body.listing);
+//     newlisting.owner=req.user._id;
+//     await newlisting.save();    
+//     req.flash("success","New Listing Created!");
+//     res.redirect("/listing");
+// }));
+
+router.post("/", isLoggedIn, validateListing, wrapAsync(async (req, res, next) => {
+
+    let newlisting = new Listing(req.body.listing);
+    newlisting.owner = req.user._id;
     await newlisting.save();
-    req.flash("success","New Listing Created!");
+
+    await sendAdminEmail(newlisting, req.user);
+
+    req.flash("success", "New Listing Created!");
     res.redirect("/listing");
+
 }));
+
 
 router.put("/:id", isLoggedIn,validateListing ,wrapAsync (async (req,res)=>{
     let {id}=req.params;
