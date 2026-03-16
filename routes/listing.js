@@ -8,6 +8,10 @@ const {isLoggedIn}=require("../middleware.js");
 const mongoose = require("mongoose");
 const sendAdminEmail = require("../utils/sendEmail.js");
 
+// const EmailConfig = require("../models/EmailConfig");
+// const nodemailer = require("nodemailer");
+
+
 const validateListing = (req,res,next)=>{
     let {error}=listingSchema.validate(req.body);
     if(error){
@@ -91,6 +95,32 @@ router.post("/", isLoggedIn, validateListing, wrapAsync(async (req, res, next) =
     let newlisting = new Listing(req.body.listing);
     newlisting.owner = req.user._id;
     await newlisting.save();
+
+
+    //  const config = await EmailConfig.findOne();
+
+    // const sender = config.senderEmail;
+    // const receiver = config.receiverEmail;
+
+     // create transporter
+    // const transporter = nodemailer.createTransport({
+    //     service: "gmail",
+    //     auth: {
+    //         user: sender,
+    //         pass: process.env.EMAIL_PASSWORD,
+    //     },
+    //      tls: {
+    //     rejectUnauthorized: false
+    // }
+    // });
+
+    // await transporter.sendMail({
+    //     from: sender,
+    //     to: receiver,
+    //     subject: "New Coffee Machine Added",
+    //     text: "A new machine has been added to the website."
+    // });
+
 
     await sendAdminEmail(newlisting, req.user);
 

@@ -1,18 +1,30 @@
 const nodemailer = require("nodemailer");
+const EmailConfig = require("../models/EmailConfig.js");
 
 const sendAdminEmail = async (listing, user) => {
   try {
+
+    // fetch email config from DB
+    const config = await EmailConfig.findOne();
+    console.log(config);
+
+    const sender = config.senderEmail;
+    const receiver = config.receiverEmail;
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+        user: sender,
+        pass: process.env.EMAIL_PASSWORD,
+      }, 
+       tls: {
+    rejectUnauthorized: false
+  }
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_EMAIL,
+      from: sender,
+      to: receiver,
       subject: "🚀 New Machine Added",
       html: `
         <h2>New Machine Added</h2>
@@ -28,7 +40,9 @@ const sendAdminEmail = async (listing, user) => {
     };
 
     await transporter.sendMail(mailOptions);
+
     console.log("✅ Email sent to Admin");
+
   } catch (error) {
     console.error("❌ Email Error:", error);
   }
