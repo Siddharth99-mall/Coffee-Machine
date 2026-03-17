@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose"); 
-const port = 3000;
+const port = 5050;
 const path = require("path");
 const methodOverride=require("method-override");
 const ejsMate = require("ejs-mate");
@@ -73,6 +73,12 @@ app.use((req,res,next)=>{
        res.locals.currentUser=req.user;
          next()
 })
+
+app.get("/", (req, res) => {
+    res.render("landing.ejs");
+});
+
+
 
 // register comparison router before listing router so "/listing/compare" is not treated as an ID
 app.use("/listing",comparisonRouter);

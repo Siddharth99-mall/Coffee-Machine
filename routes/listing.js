@@ -6,7 +6,8 @@ const ExpressError=require("../utils/ExpressError.js");
 const {listingSchema}=require("../schema.js");
 const {isLoggedIn}=require("../middleware.js");
 const mongoose = require("mongoose");
-const sendAdminEmail = require("../utils/sendEmail.js");
+const sendAdminEmail = require("../utils/sendEmail.js").sendAdminEmail;
+const sendAdminUpdateEmail = require("../utils/sendEmail.js").sendAdminUpdateEmail;
 
 // const EmailConfig = require("../models/EmailConfig");
 // const nodemailer = require("nodemailer");
@@ -133,7 +134,16 @@ router.post("/", isLoggedIn, validateListing, wrapAsync(async (req, res, next) =
 router.put("/:id", isLoggedIn,validateListing ,wrapAsync (async (req,res)=>{
     let {id}=req.params;
     await Listing.findByIdAndUpdate(id,{...req.body.listing});
+    // Get the updated listing to send in email
+    const updatedListing = await Listing.findById(id);
+
+    // Send email notification to admin
+    await sendAdminUpdateEmail(updatedListing, req.user);
+
+
     req.flash("success","Listing Updated Successfully!");
+
+    // await sendAdminEmail(newlisting, req.user);
     res.redirect(`/listing/${id}`);
 }));
 router.delete("/:id",isLoggedIn,wrapAsync (async (req,res)=>{

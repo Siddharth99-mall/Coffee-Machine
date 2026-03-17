@@ -49,6 +49,32 @@ router.get("/logout",(req,res,next)=>{
       res.redirect("/listing");
    })
 })
+ 
+router.get("/forgot-password",(req,res)=>{
+   res.render("./users/forgotPassword.ejs");
+});
+
+router.post("/forgot-password",wrapAsync(async(req,res)=>{
+   let{username,password,confirmPassword}=req.body;
+   if(password !== confirmPassword){
+      req.flash("error","Passwords do not match");
+      return res.redirect("/forgot-password");
+   }
+   let user=await User.findOne({username:username});
+   if(!user){
+      req.flash("error","User not found");
+      return res.redirect("/forgot-password");
+   }
+   await new Promise((resolve,reject)=>{
+      user.setPassword(password,(err)=>{
+         if(err) reject(err);
+         else resolve();
+      });
+   });
+   await user.save();
+   req.flash("success","Password updated successfully");
+   res.redirect("/login");
+}));
 
 
 module.exports=router;
